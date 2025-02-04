@@ -41,6 +41,24 @@ app.post('/convert', async (req,res) => {
   const {amount, from, to} = req.body;
   try{
   // Using a free API exchangerate.host (no API key needed)
+  const resp = await fetch(`https://api.exchangerate.host/latest?base=${from}&symbols=${to}`);
+  const data = await reponse.json();
+  
+  if (!data.rates || !data.rates[to]) {
+    throw new Error("Conversion rate not available");
   }
+  const rate = data.rates[to];
+  const convertedAmount = (amount * rate).toFixed(2);
+  res.send(`
+    <h1>Conversion Result</h1>
+    <p>${amount} ${from} is approximately ${convertedAmount} ${to}.</p>
+    <a href="/">Convert another amount</a>
+  `);
+  } catch (error) {
+    res.status(500).send(`Error: ${error.message}`);
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Currency Converter app is running on port ${PORT}`);
 });
