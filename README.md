@@ -130,4 +130,4 @@ This project is licensed under the MIT License - feel free to modify and distrib
 Contributing
 Feel free to open an issue or submit a pull request if you have any suggestions or improvements.
 
-Enjoy your Currency Converter on Kubernetes!# Currency-Converter
+Enjoy your Currency Converter on Kubernetes!
