@@ -15,7 +15,7 @@ spec:
       containers:
       - name: currency-converter
         # Use the image you pushed to your registry
-        image: thunderboi2023/currency-converter:v1
+        image: thunderboi2023/currency-converter:v2
         ports:
         - containerPort: 3000
 
