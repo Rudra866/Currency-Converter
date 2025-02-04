@@ -1,5 +1,6 @@
-const express = require("express");
-const fetch = require("node-fetch");
+import express from "express";
+import fetch from "node-fetch";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -41,8 +42,8 @@ app.post('/convert', async (req,res) => {
   const {amount, from, to} = req.body;
   try{
   // Using a free API exchangerate.host (no API key needed)
-  const resp = await fetch(`https://api.exchangerate.host/latest?base=${from}&symbols=${to}`);
-  const data = await reponse.json();
+  const response = await fetch(`https://api.exchangerate.host/latest?base=${from}&symbols=${to}`);
+  const data = await response.json();
   
   if (!data.rates || !data.rates[to]) {
     throw new Error("Conversion rate not available");
