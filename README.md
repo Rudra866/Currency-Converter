@@ -1,133 +1,129 @@
-Currency Converter
-A simple Node.js web application that converts currencies using live exchange rates from Frankfurter. This project demonstrates:
+<div align="center">
 
-A Node.js application containerized with Podman
-Deployment on a local Kubernetes cluster using kind
-Exposing the service via kubectl port-forward
-Overview
-This Currency Converter lets users:
+  
+  # **Currency Converter**
+  <em>A modern, lightweight web application for converting currencies, containerized with Podman and deployed on a local Kubernetes cluster using kind.</em>
+</div>
 
-Enter an amount.
-Choose a base currency (“From”).
-Choose a target currency (“To”) or “ALL” to see all rates.
-Receive a converted amount, or a table of conversions if “ALL” is selected.
-The application uses the Frankfurter API to fetch live exchange rates, which doesn’t require an API key.
+---
 
-Tech Stack
-Node.js (Express) for the web server
-Podman for building and pushing container images
-kind (Kubernetes in Docker/Podman) for running a local Kubernetes cluster
-kubectl for managing and interacting with Kubernetes
-Project Structure
-perl
+## ✨ Overview
+This **Currency Converter** lets you:
+
+1. **Enter an amount**  
+2. **Choose a base currency (“From”)**  
+3. **Choose a target currency (“To”)** or select **“ALL”** to see every rate  
+4. **Receive a converted amount**, or a **table of conversions** if “ALL” is selected
+
+> **Powered by:** [Frankfurter](https://www.frankfurter.app/) — No API Key Required!
+
+---
+
+## ⚙️ Tech Stack
+
+- **Node.js (Express):** Serves the Currency Converter web app  
+- **Podman:** Builds and pushes container images  
+- **kind (Kubernetes in Docker/Podman):** Runs a local Kubernetes cluster for development  
+- **kubectl:** Manages and interacts with Kubernetes clusters
+
+---
+
+## 🏗 Project Structure
+
+. ├── app.js # Main Node.js application ├── package.json # Node.js dependencies + scripts ├── package-lock.json # Lockfile for Node.js dependencies ├── Dockerfile or Containerfile # Used by Podman to build the container ├── deployment.yaml # Kubernetes Deployment manifest └── service.yaml # Kubernetes Service manifest
+
+yaml
 Copy
 Edit
-.
-├── app.js                # Main Node.js application
-├── package.json          # Node.js dependencies + scripts
-├── package-lock.json     # Lockfile for Node.js dependencies
-├── Dockerfile / Containerfile (optional name) # Used by Podman to build the container
-├── deployment.yaml       # Kubernetes Deployment manifest
-└── service.yaml          # Kubernetes Service manifest
-Prerequisites
-Node.js (for local testing, optional if you only run containers)
-Podman (installed and configured on your machine)
-kind (installed for local Kubernetes cluster)
-kubectl (to apply manifests and manage your cluster)
-Getting Started
-1. Clone the Repository
-bash
-Copy
-Edit
+
+---
+
+## 📋 Prerequisites
+
+- **Node.js** (for local testing, optional if you only run containers)
+- **Podman** (installed and configured on your system)
+- **kind** (for creating a local Kubernetes cluster)
+- **kubectl** (for applying manifests and managing clusters)
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+```
 git clone <repo_url>
 cd Currency-Converter
-2. Install Dependencies (Optional)
-If you want to run directly on your local machine before containerizing:
-
-bash
-Copy
-Edit
+```
+2️⃣ Install Dependencies (Optional)
+If you’d like to run the app locally (not in a container):
+```
 npm install
 npm start
+```
 Then open http://localhost:3000 in your browser.
 
-Containerization with Podman
-3. Build the Container Image
-bash
-Copy
-Edit
+🐳 Containerization with Podman
+3️⃣ Build the Container Image
+```
 podman build -t your-username/currency-converter:v1 .
-Note: Replace your-username with your actual registry username if you plan to push the image to Docker Hub or another registry.
+```
+Note: Replace your-username with your actual registry username if you plan to push to Docker Hub (or another registry).
 
-4. Test the Container Locally
-bash
-Copy
-Edit
+4️⃣ Test the Container Locally
+```
 podman run -p 3000:3000 your-username/currency-converter:v1
-Open http://localhost:3000 to confirm everything works.
+```
+Visit http://localhost:3000 to ensure everything works.
 
-5. Push the Image (Optional)
-If you want to pull the image from a remote registry (Docker Hub, Quay.io, etc.), you need to push it:
+5️⃣ Push the Image (Optional)
+If you want your container pulled from a remote registry:
 
-Log in to your registry:
-bash
-Copy
-Edit
+Log in:
+```
 podman login docker.io
-Tag and push:
-bash
-Copy
-Edit
+```
+Tag & Push:
+```
 podman tag your-username/currency-converter:v1 docker.io/your-username/currency-converter:v1
 podman push docker.io/your-username/currency-converter:v1
-Running on Kubernetes with kind
-6. Create a Local Kubernetes Cluster
-bash
-Copy
-Edit
+```
+☸️ Running on Kubernetes with kind
+6️⃣ Create a Local Cluster
+```
 kind create cluster
-This starts a Kubernetes cluster inside Docker or Podman containers.
+```
+This spins up a Kubernetes cluster inside Docker or Podman containers.
 
-7. Deploy the Currency Converter
-In your project directory:
-
-bash
-Copy
-Edit
+7️⃣ Deploy the Currency Converter
+```
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
-Check that your pods and service are running:
+```
+Check that your pods and service are up:
 
-bash
-Copy
-Edit
+```
 kubectl get pods
 kubectl get service
-8. Access the Application
-Because this example uses a LoadBalancer or ClusterIP (depending on your YAML), you can port-forward to reach the service locally:
+```
+8️⃣ Access the Application
+By default, this example might use a LoadBalancer or ClusterIP. You can port-forward to access it locally:
 
-bash
-Copy
-Edit
+```
 kubectl port-forward service/currency-converter-service 8080:80
-Then open http://localhost:8080 in your browser.
+```
+Then open http://localhost:8080.
 
-Alternatively, if you configured a NodePort, you can find the node port via:
+Alternatively, if you configured a NodePort, find it via:
 
-bash
-Copy
-Edit
+```
 kubectl get service
-and then visit <cluster-ip>:<node-port>.
+```
+and visit http://<cluster-ip>:<node-port>.
 
-Troubleshooting
-Podman Push Access Denied: Make sure you’ve tagged the image with the correct registry (e.g., docker.io/username/image:tag) and that you’re logged in (podman login docker.io).
-LoadBalancer Pending: Local Kubernetes solutions like kind or Minikube don’t automatically provision load balancers. Use NodePort or port-forward if you’re running locally.
-No External IP: Same reason as above. Use kubectl port-forward or minikube service <service-name> if on Minikube.
-License
-This project is licensed under the MIT License - feel free to modify and distribute it as you see fit.
+🛠 Troubleshooting
+Podman Push Access Denied: Ensure you’re using docker.io/username/image:tag and that you’re logged in via podman login docker.io.
+LoadBalancer Pending: Local Kubernetes (kind, minikube) won’t auto-provision load balancers. Switch to NodePort or use kubectl port-forward.
+No External IP: Same reason—use port-forward or minikube service <service-name> if on minikube.
 
-Contributing
-Feel free to open an issue or submit a pull request if you have any suggestions or improvements.
 
-Enjoy your Currency Converter on Kubernetes!
+<br /> <div align="center"> <strong>Happy Currency Converting with Kubernetes! 🚀</strong> </div> 
