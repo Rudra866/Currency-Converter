@@ -113,11 +113,4 @@ kubectl port-forward service/currency-converter-service 8080:80
 ```
 Then open http://localhost:8080.
 
-Alternatively, if you configured a NodePort, find it via:
-
-```
-kubectl get service
-```
-and visit http://<cluster-ip>:<node-port>.
-
 <br /> <div align="center"> <strong>Happy Currency Converting with Kubernetes! 🚀</strong> </div> 
