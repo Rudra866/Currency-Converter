@@ -120,10 +120,4 @@ kubectl get service
 ```
 and visit http://<cluster-ip>:<node-port>.
 
-🛠 Troubleshooting
-Podman Push Access Denied: Ensure you’re using docker.io/username/image:tag and that you’re logged in via podman login docker.io.
-LoadBalancer Pending: Local Kubernetes (kind, minikube) won’t auto-provision load balancers. Switch to NodePort or use kubectl port-forward.
-No External IP: Same reason—use port-forward or minikube service <service-name> if on minikube.
-
-
 <br /> <div align="center"> <strong>Happy Currency Converting with Kubernetes! 🚀</strong> </div> 
